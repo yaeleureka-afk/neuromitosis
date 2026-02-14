@@ -1,0 +1,17 @@
+[package]
+name = "neuromitosis-codec"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Portable skill encoding — .disc format (LLM CDs)."
+
+[dependencies]
+neuromitosis-canvas = { path = "../canvas" }
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+sha2.workspace = true
+chrono.workspace = true

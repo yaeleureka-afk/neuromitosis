@@ -1,0 +1,17 @@
+[package]
+name = "neuromitosis-memory"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Persistent memory — SQLite + FTS5 + vector embeddings."
+
+[dependencies]
+async-trait.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+rusqlite.workspace = true
+chrono.workspace = true

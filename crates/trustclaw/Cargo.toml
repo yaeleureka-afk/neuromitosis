@@ -1,0 +1,23 @@
+[package]
+name = "neuromitosis-trustclaw"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Agent personality layer — the resident AI."
+
+[dependencies]
+neuromitosis-providers = { path = "../providers" }
+neuromitosis-memory = { path = "../memory" }
+neuromitosis-tools = { path = "../tools" }
+neuromitosis-security = { path = "../security" }
+async-trait.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+toml.workspace = true
+chrono.workspace = true

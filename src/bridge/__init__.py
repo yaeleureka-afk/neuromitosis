@@ -1,1 +1,0 @@
-"""midio.bridge — JSON-RPC bridge for the Electron MCP server."""\n

@@ -1,0 +1,16 @@
+[package]
+name = "neuromitosis-molt"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Drift detection and re-evaluation for Neuromitosis."
+
+[dependencies]
+neuromitosis-canvas = { path = "../canvas" }
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+chrono.workspace = true

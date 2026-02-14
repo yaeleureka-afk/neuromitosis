@@ -1,0 +1,93 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/canvas",
+    "crates/loom",
+    "crates/molt",
+    "crates/codec",
+    "crates/providers",
+    "crates/memory",
+    "crates/tools",
+    "crates/channels",
+    "crates/security",
+    "crates/mcp",
+    "crates/store",
+    "crates/trustclaw",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Yael <yael.eureka@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/yaeleureka-afk/neuromitosis"
+
+[workspace.dependencies]
+# Async runtime
+tokio = { version = "1.42", default-features = false, features = ["rt-multi-thread", "macros", "time", "net", "io-util", "sync", "process", "io-std", "fs"] }
+# Serialization
+serde = { version = "1.0", default-features = false, features = ["derive"] }
+serde_json = { version = "1.0", default-features = false, features = ["std"] }
+# Error handling
+anyhow = "1.0"
+thiserror = "2.0"
+# Async traits
+async-trait = "0.1"
+# UUID
+uuid = { version = "1.11", default-features = false, features = ["v4", "std", "serde"] }
+# Logging
+tracing = { version = "0.1", default-features = false }
+tracing-subscriber = { version = "0.3", default-features = false, features = ["fmt", "ansi"] }
+# HTTP
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+# Config
+toml = "0.8"
+# SQLite
+rusqlite = { version = "0.32", features = ["bundled"] }
+# Time
+chrono = { version = "0.4", default-features = false, features = ["clock", "std", "serde"] }
+# CLI
+clap = { version = "4.5", features = ["derive"] }
+# Checksums
+sha2 = "0.10"
+
+[package]
+name = "neuromitosis"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "The CLI reinvented for the MCP era. Visual swarm orchestration in Rust."
+repository.workspace = true
+readme = "README.md"
+keywords = ["ai", "agent", "mcp", "swarm", "orchestration"]
+categories = ["command-line-utilities", "api-bindings"]
+
+[dependencies]
+neuromitosis-canvas = { path = "crates/canvas" }
+neuromitosis-loom = { path = "crates/loom" }
+neuromitosis-molt = { path = "crates/molt" }
+neuromitosis-codec = { path = "crates/codec" }
+neuromitosis-providers = { path = "crates/providers" }
+neuromitosis-memory = { path = "crates/memory" }
+neuromitosis-tools = { path = "crates/tools" }
+neuromitosis-channels = { path = "crates/channels" }
+neuromitosis-security = { path = "crates/security" }
+neuromitosis-mcp = { path = "crates/mcp" }
+neuromitosis-store = { path = "crates/store" }
+neuromitosis-trustclaw = { path = "crates/trustclaw" }
+tokio.workspace = true
+clap.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
+
+[dev-dependencies]
+tokio-test = "0.4"

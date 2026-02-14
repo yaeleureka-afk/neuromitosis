@@ -1,0 +1,13 @@
+[package]
+name = "neuromitosis-security"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Security boundaries and policy enforcement."
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true

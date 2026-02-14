@@ -1,0 +1,15 @@
+[package]
+name = "neuromitosis-providers"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "LLM provider backends — Anthropic, OpenAI, Ollama, OpenRouter."
+
+[dependencies]
+async-trait.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+reqwest.workspace = true

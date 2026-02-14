@@ -1,0 +1,15 @@
+[package]
+name = "neuromitosis-store"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "llm.store client — publish, install, search .disc files."
+
+[dependencies]
+neuromitosis-codec = { path = "../codec" }
+serde.workspace = true
+serde_json.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+reqwest.workspace = true

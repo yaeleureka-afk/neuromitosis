@@ -1,28 +1,39 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
 
 [project]
-name = "midio"
+name = "neuromitosis"
 version = "0.1.0"
-description = "Visual canvas for composing AI agent swarms"
+description = "💿 A learning network powered by llm.store — encode, share, and run AI agent skills"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.10"
 authors = [
     {name = "Yael", email = "yael.eureka@gmail.com"},
 ]
-keywords = ["ai", "agents", "swarm", "canvas", "orchestration", "loom"]
+keywords = ["ai", "agents", "skills", "mcp", "composio", "workflow", "disc", "llm"]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 
 [project.urls]
-Repository = "https://github.com/yaeleureka-afk/midio"
+Homepage = "https://llm.store"
+Repository = "https://github.com/yaeleureka-afk/neuromitosis"
+Documentation = "https://github.com/yaeleureka-afk/neuromitosis/tree/main/docs"
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "black", "ruff"]
+llm = ["anthropic", "openai"]
+composio = ["composio-core"]
+
+[tool.setuptools.packages.find]
+include = ["src*"]

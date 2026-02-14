@@ -1,54 +1,129 @@
-# Architecture
+# 🧬 Neuromitosis Architecture
 
-## Overview
+## System Overview
 
-Midio is built in layers:
+Neuromitosis is a learning network for AI agent skills, powered by [llm.store](https://llm.store).
 
 ```
-┌─────────────────────────────────────┐
-│           Canvas (UI/Visual)         │
-│  Nodes • Yarn • Topology • Timeline │
-├─────────────────────────────────────┤
-│           æ Loom (Runtime)           │
-│  Execution • State • Observation    │
-├─────────────────────────────────────┤
-│         Molt Engine (Evolution)      │
-│  Drift Detection • Rewind • Reweave │
-├─────────────────────────────────────┤
-│        Integrations (Skills)         │
-│  Gmail • Notion • GitHub • LLMs     │
-└─────────────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│                    llm.store                          │
+│         Discovery, distribution, marketplace          │
+│              mcp://llm.store/v1/skills               │
+└────────────────────────┬─────────────────────────────┘
+                         │
+┌────────────────────────▼─────────────────────────────┐
+│                   Neuromitosis                        │
+│                                                       │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐           │
+│  │  Canvas 🎨│→│  Loom  🧶│→│  Molt  🦎│           │
+│  │  (nodes)  │  │(runtime) │  │ (evolve) │           │
+│  └──────────┘  └──────────┘  └──────────┘           │
+│       ↕              ↕             ↕                  │
+│  ┌──────────────────────────────────────────┐        │
+│  │           Codec 💿                        │        │
+│  │   Encoder (burn) ←→ Disc ←→ Decoder (rip)│        │
+│  │                    ↕                      │        │
+│  │              Library (shelf)              │        │
+│  └──────────────────────────────────────────┘        │
+│       ↕                                               │
+│  ┌──────────┐  ┌──────────┐                          │
+│  │Trustclaw │  │  Skills  │                          │
+│  │  🧠 agent│←→│(Composio)│                          │
+│  └──────────┘  └──────────┘                          │
+└──────────────────────────────────────────────────────┘
+                         │ MCP
+┌────────────────────────▼─────────────────────────────┐
+│                    Composio                           │
+│            500+ integrations, OAuth handled           │
+└──────────────────────────────────────────────────────┘
 ```
 
-## Node Types
+## Module Map
 
-| Type | Role | Example |
-|------|------|---------|
-| **Source** | Ingests external data | Gmail fetcher, webhook listener |
-| **Transform** | Processes/reshapes data | Summarizer, classifier |
-| **Action** | Produces side effects | Notion writer, email sender |
-| **Guard (æ)** | Enforces invariants | Drift detector, schema validator |
-| **Control** | Manages flow | Router, retry loop, molt trigger |
+### Canvas (`src/canvas/`)
+The visual composition layer. Nodes are the atomic unit of agency.
 
-## Yarn (Connections)
+- **Node**: Base primitive with typed I/O buffers, health tracking, memory
+- **NodeType**: Source, Transform, Action, Guard, Control
+- **Yarn**: Typed connections (data, signal, state, guard)
 
-Yarn is typed:
-- `data` — carries payloads between nodes
-- `signal` — triggers execution (start, stop, retry)
-- `state` — shares persistent context across the swarm
-- `guard` — invariant assertions from æ nodes
+### Loom (`src/loom/`)
+The æ loom — runtime execution engine.
 
-## Execution Model
+- Topological sort via Kahn's algorithm
+- Guard node interrupt support
+- Molt signal propagation
+- Execution logging
 
-The æ loom executes nodes in **topological order** with support for:
-- Parallel branches (independent subgraphs run concurrently)
-- Feedback loops (guarded by cycle-depth limits)
-- Molt interrupts (any node can signal a molt)
+### Molt (`src/molt/`)
+Deliberate system evolution.
 
-## State Management
+- Drift detection per node
+- Threshold-based molt triggering
+- Molt history tracking
+- Reweave proposals
 
-Each node maintains:
-- `input_buffer` — queued incoming data
-- `output_buffer` — produced results
-- `memory` — persistent state across executions
-- `health` — status + drift metrics
+### Codec (`src/codec/`)
+💿 The disc encoding/decoding system. The heart of the skill economy.
+
+- **format.py**: `.disc` specification (Track, Disc, AuthRequirement, DiscMetadata)
+- **encoder.py**: Loom → Disc (burn)
+- **decoder.py**: Disc → Loom (rip/play)
+- **library.py**: Local disc collection (~/.neuromitosis/library/)
+
+### Trustclaw (`src/trustclaw/`)
+🧠 The agent brain.
+
+- LLM-agnostic orchestration (Claude, OpenAI, Ollama)
+- Composio-native skill mapping
+- Persistent memory (JSON, upgradeable to ChromaDB)
+- Confirmation boundary for external actions
+
+## Data Flow
+
+### Burn (create a 💿)
+```
+Canvas nodes → Loom wiring → Encoder.burn() → .disc file → Library.save()
+```
+
+### Rip (load a 💿)
+```
+Library.load() → .disc file → Decoder.load() → Loom → weave()
+```
+
+### Share (publish a 💿)
+```
+Library.export() → llm.store API → MCP discovery → other users
+```
+
+### Install (get a 💿)
+```
+llm.store → nm install → Library.import() → Decoder.load() → Canvas
+```
+
+## Key Design Decisions
+
+| Decision | Rationale |
+|----------|-----------|
+| JSON format for .disc | Human-readable, git-friendly, debuggable |
+| Composio as execution primitive | 500+ integrations without building them |
+| MCP as discovery protocol | Skills announce themselves at runtime |
+| Open format | Any agent framework can parse .disc files |
+| Visual runtime | Canvas makes skills accessible to non-devs |
+| Auth manifests (not keys) | Discs declare what they need, not credentials |
+| Checksum integrity | Tamper detection built into the format |
+
+## Planned: Monorepo Structure
+
+```
+neuromitosis/
+├── packages/
+│   ├── core/         # Python: canvas, loom, molt, codec, trustclaw
+│   ├── desktop/      # Electron: visual canvas app
+│   ├── cli/          # nm burn, rip, install, publish
+│   ├── mcp-server/   # Composio-backed MCP endpoint
+│   └── store/        # llm.store API + frontend
+├── discs/            # First-party 💿 skill library
+├── docs/
+└── tests/
+```

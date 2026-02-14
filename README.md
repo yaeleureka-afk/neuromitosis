@@ -1,95 +1,117 @@
-# 🧬 Midio
+# 🧬💿 Neuromitosis
 
-**Visual canvas for composing AI agent swarms.**
+**A learning network powered by [llm.store](https://llm.store)**
 
-Midio is a node-based composition tool where you drag, connect, and orchestrate AI agents into living workflows — not pipelines, not DAGs, but *swarms* that breathe, molt, and evolve.
+> Skills divide. Knowledge propagates. The network evolves.
 
----
-
-## Core Concepts
-
-### The 4D Manifold
-Every Midio canvas operates across four dimensions:
-
-| Dimension | What it means |
-|-----------|--------------|
-| **Space** | The visual topology — where nodes sit, how yarn connects them |
-| **Time** | Timeline replay, version history, temporal debugging |
-| **Agency** | Each node has autonomous behavior — planners plan, verifiers verify, deployers deploy |
-| **Invariant** | æ guard nodes — anchors that enforce constraints across the swarm |
-
-### æ Loom
-The æ loom is Midio's runtime. It weaves agent nodes together through *yarn* — typed connections that carry data, signals, and state between nodes. The loom doesn't just execute; it **observes**, tracking drift between intended and actual behavior.
-
-### Molt
-Systems evolve. When a path is failing or a topology has outgrown its design, Midio supports **Molt** — a deliberate re-evaluation, rewind, and re-weave of the swarm. Not a hotfix. A metamorphosis.
+Neuromitosis is an open skill economy for AI agents. Build workflows on a visual canvas, encode them as portable 💿 **discs**, and share them through [llm.store](https://llm.store) — the npm of agent skills.
 
 ---
 
-## Project Structure
+## 💿 What's a Disc?
 
-```
-midio/
-├── README.md              # You are here
-├── LICENSE                # MIT
-├── .gitignore
-├── manifesto.md           # The vision document
-├── docs/
-│   ├── architecture.md    # System design & topology
-│   └── glossary.md        # Term definitions
-├── src/
-│   ├── __init__.py
-│   ├── canvas/
-│   │   ├── __init__.py
-│   │   └── node.py        # Base node types
-│   ├── loom/
-│   │   ├── __init__.py
-│   │   └── runtime.py     # æ loom runtime engine
-│   ├── molt/
-│   │   ├── __init__.py
-│   │   └── evaluator.py   # Molt trigger & reweave logic
-│   └── workflows/
-│       ├── __init__.py
-│       └── morning_ritual.py  # 8 AM ritual: Gmail → Summarizer → Planner → Notion
-├── tests/
-│   ├── __init__.py
-│   └── test_node.py
-└── pyproject.toml
+A disc is a portable, self-describing container for AI agent skills. Think of it as a package.json for agent workflows:
+
+```json
+{
+  "metadata": {"name": "email-triage", "version": "1.0.0", "author": "yael"},
+  "tracks": [
+    {"name": "fetch_emails", "handler": "GMAIL_FETCH_EMAILS", "outputs_to": ["summarize"]},
+    {"name": "summarize", "node_type": "transform", "outputs_to": ["notify"]},
+    {"name": "notify", "handler": "SLACK_SEND_MESSAGE"}
+  ],
+  "auth_manifest": [{"toolkit": "gmail"}, {"toolkit": "slack"}],
+  "checksum": "a1b2c3d4e5f6g7h8"
+}
 ```
 
----
+Burn a workflow → share the `.disc` → anyone can load and run it.
 
-## First Workflow: The 8 AM Ritual
+## Architecture
 
-The proving ground. Every morning at 8 AM:
+```
+┌─────────────────────────────────────┐
+│           llm.store                 │  ← Discovery & distribution
+│   Browse, publish, install 💿       │
+└──────────────┬──────────────────────┘
+               │
+┌──────────────▼──────────────────────┐
+│         Neuromitosis                │  ← Composition & visualization
+│   Canvas + Loom + Molt + Codec      │
+│   Wire skills visually              │
+└──────────────┬──────────────────────┘
+               │ MCP
+┌──────────────▼──────────────────────┐
+│          Composio                   │  ← Execution & auth
+│   500+ integrations via MCP         │
+└─────────────────────────────────────┘
+```
 
-1. **Cron** triggers the swarm
-2. **Gmail node** fetches unread emails
-3. **Summarizer node** distills them
-4. **Planner node** extracts action items
-5. **Notion logger node** records the plan
-6. **Verifier node** checks for drift from yesterday's plan
+## Core Modules
 
-This is Midio's "hello world" — except it actually does something useful.
+| Module | What | Path |
+|--------|------|------|
+| **Canvas** 🎨 | Node primitives — the atoms of agency | `src/canvas/` |
+| **Loom** 🧶 | Runtime execution engine (topological sort, Kahn's algorithm) | `src/loom/` |
+| **Molt** 🦎 | Drift detection and deliberate system evolution | `src/molt/` |
+| **Codec** 💿 | Encode/decode/share skill libraries as `.disc` files | `src/codec/` |
+| **Trustclaw** 🧠 | Agent brain — LLM orchestration, memory, skill routing | `src/trustclaw/` |
 
----
+## Quick Start
 
-## Philosophy
+```bash
+# Clone
+git clone https://github.com/yaeleureka-afk/neuromitosis.git
+cd neuromitosis
 
-> Teach through canvas, not documentation.  
-> Show the swarm, don't describe it.  
-> Let the topology speak.
+# Install
+pip install -e .
 
-Midio exists because the future of AI isn't a single model — it's a **swarm of specialists** working in concert. And swarms need a loom, not a pipeline.
+# Burn your first disc
+python -c "
+from src.canvas.node import Node, NodeType
+from src.loom.runtime import Loom
+from src.codec import Encoder
 
----
+loom = Loom(name='hello')
+n1 = Node(name='fetch', node_type=NodeType.SOURCE)
+n2 = Node(name='process', node_type=NodeType.TRANSFORM)
+n1.connect(n2)
+loom.add_node(n1)
+loom.add_node(n2)
+
+disc = Encoder.burn(loom, name='hello_world', author='you')
+print(disc.to_json())
+"
+```
+
+## The Vision
+
+**npm** standardized JavaScript packages. **Docker Hub** standardized containers. **Hugging Face** standardized models.
+
+**Neuromitosis + llm.store** standardizes **AI agent skills**.
+
+The `.disc` format is the unit. MCP is the protocol. The canvas is the runtime. [llm.store](https://llm.store) is the marketplace.
+
+Skills that find you. Not the other way around.
+
+## Stack
+
+- **Format**: `.disc` (JSON, self-describing, checksummed)
+- **Protocol**: [MCP](https://modelcontextprotocol.io) (Model Context Protocol)
+- **Runtime**: Python 3.10+ (canvas, loom, codec, trustclaw)
+- **Execution**: [Composio](https://composio.dev) (500+ tool integrations, OAuth handled)
+- **Desktop**: Electron + React + React Flow (planned)
+- **Registry**: [llm.store](https://llm.store)
 
 ## Status
 
-🟡 **Scaffolding** — Structure in place, building out node primitives and the æ loom runtime.
-
----
+🧬 **Pre-alpha** — Core primitives built, codec functional, learning network forming.
 
 ## License
 
-MIT — see [LICENSE](./LICENSE)
+[MIT](LICENSE) — Skills want to be free.
+
+---
+
+*Built with 🧠 by [Yael](https://github.com/yaeleureka-afk) and [Trustclaw](https://composio.dev)*

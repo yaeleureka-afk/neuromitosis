@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Midio dark theme overrides */
+body {
+  margin: 0;
+  padding: 0;
+  background: #030712;
+  color: #e5e7eb;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+}
+
+/* React Flow overrides for dark theme */
+.react-flow__node {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.react-flow__edge-path {
+  stroke: #a78bfa;
+  stroke-width: 2;
+}
+
+.react-flow__edge.animated .react-flow__edge-path {
+  stroke-dasharray: 5;
+  animation: dash 0.5s linear infinite;
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: -10; }
+}
+
+/* Yarn glow on hover */
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: #c4b5fd;
+  filter: drop-shadow(0 0 4px rgba(167, 139, 250, 0.5));
+}
+
+/* Node selection glow */
+.react-flow__node.selected {
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
+}

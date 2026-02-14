@@ -1,0 +1,17 @@
+{
+  "name": "midio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Visual canvas for composing AI agent swarms — the CLI reinvented for the MCP era",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=packages/desktop",
+    "build": "npm run build --workspace=packages/desktop",
+    "test:core": "cd packages/core && pytest",
+    "test:desktop": "npm test --workspace=packages/desktop"
+  },
+  "author": "Yael <yael.eureka@gmail.com>",
+  "license": "MIT"
+}

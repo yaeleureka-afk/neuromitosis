@@ -1,0 +1,6 @@
+# This is a symlink/reference to the root midio package.
+# The desktop app spawns: python -m midio.bridge
+# which lives in the main src/ directory.
+#
+# For development, install the root package:
+#   cd ../.. && pip install -e .
